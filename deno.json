@@ -1,0 +1,40 @@
+{
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@earendil-works/chord": "npm:@earendil-works/chord@1.0.3",
+    "@earendil-works/pi-ai": "npm:@earendil-works/pi-ai@1.0.3",
+    "@earendil-works/pi-durable": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/index.ts",
+    "@earendil-works/pi-durable/storage/sqlite/cloudflare": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/sqlite/cloudflare.ts",
+    "@earendil-works/pi-durable/storage/sqlite": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/sqlite/index.ts",
+    "@earendil-works/pi-durable/storage/memory": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/memory.ts",
+    "@earendil-works/pi-durable/tools": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/tools/index.ts",
+    "@earendil-works/pi-durable/env": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/env/index.ts",
+    "diff": "npm:diff@8.0.4",
+    "typebox": "npm:typebox@1.3.27",
+    "@cloudflare/workers-types": "npm:@cloudflare/workers-types@5.20261005.1",
+    "just-bash": "npm:just-bash@3.6.0",
+    "remix": "npm:remix@3.0.0",
+    "esbuild": "npm:esbuild@0.28.2",
+    "wrangler": "npm:wrangler@4.148.0",
+    "@types/node": "npm:@types/node@26.6.4",
+    "cloudflare:workers": "./app/cells/test-runtime.ts",
+    "./dist/worker": "./worker.ts"
+  },
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom", "dom.iterable", "esnext"],
+    "types": ["@types/node", "./worker-configuration.d.ts"],
+    "skipLibCheck": true,
+    "noImplicitOverride": false,
+    "jsx": "react-jsx",
+    "jsxImportSource": "remix/component"
+  },
+  "tasks": {
+    "build": "rm -rf dist && mkdir -p dist && cp -r public dist/public && deno run -A --frozen build.ts",
+    "celld": "deno task build && celld dev --no-watch",
+    "test": "NODE_ENV=test deno test -A --frozen app/",
+    "test:celld": "deno test -A --frozen celld-smoke.ts",
+    "generate-types": "deno task build && deno run -A npm:wrangler@4.148.0 types --include-runtime=false --strict-vars=false",
+    "typecheck": "deno task generate-types && deno check --frozen build.ts worker.ts celld-smoke.ts app/"
+  },
+  "exclude": ["dist", "node_modules", ".amp", ".celld"]
+}
