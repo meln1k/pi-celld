@@ -1,14 +1,9 @@
 {
   "nodeModulesDir": "auto",
   "imports": {
-    "@earendil-works/chord": "npm:@earendil-works/chord@1.0.3",
-    "@earendil-works/pi-ai": "npm:@earendil-works/pi-ai@1.0.3",
-    "@earendil-works/pi-durable": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/index.ts",
-    "@earendil-works/pi-durable/storage/sqlite/cloudflare": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/sqlite/cloudflare.ts",
-    "@earendil-works/pi-durable/storage/sqlite": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/sqlite/index.ts",
-    "@earendil-works/pi-durable/storage/memory": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/storage/memory.ts",
-    "@earendil-works/pi-durable/tools": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/tools/index.ts",
-    "@earendil-works/pi-durable/env": "https://raw.githubusercontent.com/earendil-works/pi/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae/packages/durable/src/env/index.ts",
+    "@earendil-works/chord": "npm:@earendil-works/chord@1.1.0",
+    "@earendil-works/pi-ai": "npm:@earendil-works/pi-ai@1.1.0",
+    "@earendil-works/pi-durable": "npm:@earendil-works/pi-durable@1.1.0",
     "diff": "npm:diff@8.0.4",
     "typebox": "npm:typebox@1.3.27",
     "@cloudflare/workers-types": "npm:@cloudflare/workers-types@5.20261005.1",

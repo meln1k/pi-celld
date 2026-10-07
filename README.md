@@ -67,20 +67,19 @@ deno task celld
 ```
 
 The local Worker listens on port 9876. Re-run after source changes: the build task
-copies `public/` and runs `build.ts` with Deno. esbuild bundles browser assets;
-`deno bundle` builds the SSR Worker into `dist/`, which celld serves.
+copies `public/` and runs `build.ts` with Deno. esbuild bundles browser assets
+and the SSR Worker into `dist/`, which celld serves.
 There is no separate preview or HMR server. Deno manages dependencies in
 `deno.json` and `deno.lock`, including npm-registry packages; npm is not required.
 `app/assets.ts` uses Remix's asset server for build-time browser asset discovery.
 The Worker receives URL metadata instead of the filesystem-backed compiler, so
 `render({ assets })`, document script entries, and `clientEntry(import.meta.url, ...)`
-use Remix's asset integration. The build prepares that metadata in a temporary
-source copy and removes it afterward. Deno resolves the Worker import map and pinned
-HTTP imports directly; celld serves the compiled assets.
+use Remix's asset integration. An esbuild plugin injects that metadata into the
+Worker without copying or modifying application sources.
 
-Pi Durable and its SQLite adapter are imported from source at [this pinned commit](https://github.com/earendil-works/pi/commit/b30a6dd779340f7bc2f3ffa60f4c0a5f914ba9ae).
-Deno resolves these imports directly and verifies them against `deno.lock`.
-There is no vendor tree or separate TypeScript path mapping.
+Pi Durable 1.1.0 and its SQLite adapter use the published npm package, alongside
+chord and pi-ai 1.1.0. Deno locks these dependencies in `deno.lock`.
+There is no vendor tree, HTTP source import, or separate TypeScript path mapping.
 
 Save an OpenCode Go key in **Settings**. First generate the encryption secret
 once in ignored `.dev.vars` (preserves an existing secret):
@@ -102,7 +101,7 @@ The User cell runs bundled Remix migrations during setup, inside one cell-owned
 transaction, with an applied-migration journal in its SQLite database. Add new
 numbered directories with `up.sql` under `app/cells/user/migrations/` and register
 their text imports/descriptors in `migrations.ts`; do not edit SQL already applied.
-Deno bundles the SQL text unchanged; cells do not read files at runtime.
+esbuild bundles the SQL text unchanged; cells do not read files at runtime.
 Migration `0001` retains its original whitespace to preserve existing checksums.
 Pi's session schema remains managed by `SqliteStorage`, not these migrations.
 
